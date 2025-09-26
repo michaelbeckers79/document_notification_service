@@ -33,10 +33,10 @@ public class RabbitMQService : IDisposable
             _channel = await _connection!.CreateChannelAsync();
             
             // Declare the exchange
-            await _channel.ExchangeDeclareAsync(
-                exchange: _settings.Exchange,
-                type: ExchangeType.Direct,
-                durable: true);
+            //await _channel.ExchangeDeclareAsync(
+            //    exchange: _settings.Exchange,
+            //    type: ExchangeType.Headers,
+            //    durable: true);
 
             _logger.LogInformation("Created RabbitMQ channel and declared exchange: {Exchange}", _settings.Exchange);
         }
@@ -91,8 +91,8 @@ public class RabbitMQService : IDisposable
             
             // Create message body by replacing placeholder in template
             var messageTemplate = await LoadMessageTemplateAsync();
-            var messageBody = messageTemplate.Replace("{{Portfolio ID}}", portfolioId);
-            
+            var messageBody = messageTemplate.Replace("{{Portfolio ID}}", portfolioId).Replace("{{TemplateId}}", _settings.TemplateId);
+
             var body = Encoding.UTF8.GetBytes(messageBody);
 
             // Create properties with required headers
@@ -126,20 +126,12 @@ public class RabbitMQService : IDisposable
 
     private async Task<string> LoadMessageTemplateAsync()
     {
-        // Load the message template from the RabbitMQ Message.xml file
-        var templatePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "RabbitMQ Message.xml");
-        
-        if (!File.Exists(templatePath))
-        {
-            // Fallback to embedded template
-            return @"<Communication xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""http://www.objectway.com/comm/request/communicationrequest"">
-    <Type>DOCUMENT_NOTIFICATION</Type>
-    <EntityID>{{Portfolio ID}}</EntityID>
-    <ExternalData></ExternalData>
+        // Fallback to embedded template
+        return @"<Communication xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""http://www.objectway.com/comm/request/communicationrequest"">
+<Type>{{TemplateId}}</Type>
+<EntityID>{{Portfolio ID}}</EntityID>
+<ExternalData></ExternalData>
 </Communication>";
-        }
-
-        return await File.ReadAllTextAsync(templatePath);
     }
 
     public async Task PublishBatchDocumentNotificationsAsync(IEnumerable<string> portfolioIds)

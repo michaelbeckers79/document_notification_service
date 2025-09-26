@@ -32,7 +32,7 @@ public class DocumentProcessingService
         _settings = options.Value;
     }
 
-    public async Task<ProcessingResult> ProcessDocumentsAsync(DateTime? since = null, bool dryRun = false)
+    public async Task<ProcessingResult> ProcessDocumentsAsync(DateTime? since = null, bool dryRun = false, bool force = false)
     {
         var result = new ProcessingResult();
         var errors = new List<string>();
@@ -46,7 +46,15 @@ public class DocumentProcessingService
             _logger.LogInformation("Processing documents since: {Timestamp}", queryTimestamp);
 
             // Search for new documents
-            var documents = await _dsxService.SearchDocumentsAsync(queryTimestamp, _settings.DSXService.DocumentTypes);
+            //var documents = await _dsxService.SearchDocumentsAsync(queryTimestamp, _settings.DSXService.DocumentTypes);
+            var documents = new List<DocumentInfo>() {
+                new DocumentInfo {
+                    DocumentId = "TEST123",
+                    Name = "Test Document",
+                    DocumentDate = DateTime.UtcNow,
+                    PortfolioId = "PORTFOLIO1"
+                }
+            };
             _logger.LogInformation("Found {Count} documents to process", documents.Count);
 
             if (!documents.Any())
@@ -55,21 +63,31 @@ public class DocumentProcessingService
                 return result;
             }
 
+            List<DocumentInfo> newDocuments;
+
             // Filter out already processed documents
-            var existingDocumentIds = await _context.ProcessedDocuments
-                .Where(pd => documents.Select(d => d.DocumentId).Contains(pd.DocumentId))
-                .Select(pd => pd.DocumentId)
-                .ToListAsync();
-
-            var newDocuments = documents.Where(d => !existingDocumentIds.Contains(d.DocumentId)).ToList();
-            _logger.LogInformation("Found {Count} new documents (filtered out {Existing} already processed)", 
-                newDocuments.Count, existingDocumentIds.Count);
-
-            if (!newDocuments.Any())
+            if (force)
             {
-                await UpdateLastQueryTimestampAsync();
-                _logger.LogInformation("All documents have already been processed");
-                return result;
+                _logger.LogInformation("Force flag is set, reprocessing all found documents");
+                newDocuments = documents;
+            }
+            else
+            {
+                var existingDocumentIds = await _context.ProcessedDocuments
+                    .Where(pd => documents.Select(d => d.DocumentId).Contains(pd.DocumentId))
+                    .Select(pd => pd.DocumentId)
+                    .ToListAsync();
+
+                newDocuments = documents.Where(d => !existingDocumentIds.Contains(d.DocumentId)).ToList();
+                _logger.LogInformation("Found {Count} new documents (filtered out {Existing} already processed)",
+                    newDocuments.Count, existingDocumentIds.Count);
+
+                if (!newDocuments.Any())
+                {
+                    await UpdateLastQueryTimestampAsync();
+                    _logger.LogInformation("All documents have already been processed");
+                    return result;
+                }
             }
 
             // Process each document

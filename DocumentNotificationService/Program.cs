@@ -47,7 +47,7 @@ class Program
         {
             logger.LogInformation("Starting document processing command");
             
-            var result = await processingService.ProcessDocumentsAsync(options.Since, options.DryRun);
+            var result = await processingService.ProcessDocumentsAsync(options.Since, options.DryRun, options.Force);
             
             Console.WriteLine($"Processing completed:");
             Console.WriteLine($"  Documents processed: {result.ProcessedCount}");

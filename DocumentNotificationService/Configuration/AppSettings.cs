@@ -37,6 +37,7 @@ public class RabbitMQSettings
     public string Operation { get; set; } = "comm:communication";
     public string Application { get; set; } = "thrd:dsx-service";
     public string VHost { get; set; } = "/";
+    public string TemplateId { get; set; } = string.Empty;
 }
 
 public class SslSettings
