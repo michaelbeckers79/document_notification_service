@@ -1,0 +1,27 @@
+{
+  "profiles": {
+    "DocumentNotificationService": {
+      "commandName": "Project"
+    },
+    "Migrate": {
+      "commandName": "Project",
+      "commandLineArgs": "migrate --create"
+    },
+    "Status": {
+      "commandName": "Project",
+      "commandLineArgs": "status --limit 10"
+    },
+    "Dry Run": {
+      "commandName": "Project",
+      "commandLineArgs": "process --dry-run"
+    },
+    "Force": {
+      "commandName": "Project",
+      "commandLineArgs": "process --force"
+    },
+    "Run": {
+      "commandName": "Project",
+      "commandLineArgs": "process"
+    }
+  }
+}
