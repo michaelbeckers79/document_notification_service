@@ -38,3 +38,10 @@ public class MigrateOptions
     [Option('c', "create", Required = false, HelpText = "Create the database if it doesn't exist")]
     public bool Create { get; set; }
 }
+
+[Verb("health", HelpText = "Check service health for Kubernetes probes")]
+public class HealthOptions
+{
+    [Option('t', "timeout", Required = false, Default = 30, HelpText = "Health check timeout in seconds")]
+    public int Timeout { get; set; }
+}
