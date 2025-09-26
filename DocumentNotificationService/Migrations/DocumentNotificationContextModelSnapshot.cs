@@ -43,14 +43,6 @@ namespace DocumentNotificationService.Migrations
                         .HasName("pk_last_query_timestamps");
 
                     b.ToTable("last_query_timestamps");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            LastSuccessfulQuery = new DateTime(2025, 9, 25, 15, 57, 31, 825, DateTimeKind.Utc).AddTicks(7230),
-                            UpdatedAt = new DateTime(2025, 9, 26, 15, 57, 31, 825, DateTimeKind.Utc).AddTicks(7472)
-                        });
                 });
 
             modelBuilder.Entity("DocumentNotificationService.Models.ProcessedDocument", b =>

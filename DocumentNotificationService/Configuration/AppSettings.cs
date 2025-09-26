@@ -36,6 +36,7 @@ public class RabbitMQSettings
     public string TenantId { get; set; } = "jmfinn";
     public string Operation { get; set; } = "comm:communication";
     public string Application { get; set; } = "thrd:dsx-service";
+    public string VHost { get; set; } = "/";
 }
 
 public class SslSettings

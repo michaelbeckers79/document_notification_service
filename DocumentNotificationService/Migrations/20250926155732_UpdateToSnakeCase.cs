@@ -106,13 +106,6 @@ namespace DocumentNotificationService.Migrations
                 name: "pk_last_query_timestamps",
                 table: "last_query_timestamps",
                 column: "id");
-
-            migrationBuilder.UpdateData(
-                table: "last_query_timestamps",
-                keyColumn: "id",
-                keyValue: 1,
-                columns: new[] { "last_successful_query", "updated_at" },
-                values: new object[] { new DateTime(2025, 9, 25, 15, 57, 31, 825, DateTimeKind.Utc).AddTicks(7230), new DateTime(2025, 9, 26, 15, 57, 31, 825, DateTimeKind.Utc).AddTicks(7472) });
         }
 
         /// <inheritdoc />
@@ -213,13 +206,6 @@ namespace DocumentNotificationService.Migrations
                 name: "PK_LastQueryTimestamps",
                 table: "LastQueryTimestamps",
                 column: "Id");
-
-            migrationBuilder.UpdateData(
-                table: "LastQueryTimestamps",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "LastSuccessfulQuery", "UpdatedAt" },
-                values: new object[] { new DateTime(2025, 9, 25, 15, 23, 59, 656, DateTimeKind.Utc).AddTicks(2855), new DateTime(2025, 9, 26, 15, 23, 59, 656, DateTimeKind.Utc).AddTicks(3179) });
         }
     }
 }

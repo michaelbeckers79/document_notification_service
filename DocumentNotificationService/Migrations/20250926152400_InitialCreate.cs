@@ -44,11 +44,6 @@ namespace DocumentNotificationService.Migrations
                     table.PrimaryKey("PK_ProcessedDocuments", x => x.Id);
                 });
 
-            migrationBuilder.InsertData(
-                table: "LastQueryTimestamps",
-                columns: new[] { "Id", "LastSuccessfulQuery", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2025, 9, 25, 15, 23, 59, 656, DateTimeKind.Utc).AddTicks(2855), new DateTime(2025, 9, 26, 15, 23, 59, 656, DateTimeKind.Utc).AddTicks(3179) });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ProcessedDocuments_DocumentDate",
                 table: "ProcessedDocuments",

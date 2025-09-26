@@ -51,6 +51,7 @@ public class RabbitMQService : IDisposable
             var factory = new ConnectionFactory
             {
                 HostName = _settings.HostName,
+                VirtualHost = _settings.VHost,
                 Port = _settings.Port,
                 UserName = _settings.UserName,
                 Password = _settings.Password
