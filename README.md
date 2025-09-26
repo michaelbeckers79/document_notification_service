@@ -46,6 +46,15 @@ dotnet run -- migrate [options]
 Options:
 - `--create, -c` : Create the database if it doesn't exist
 
+### Health Check
+```bash
+dotnet run -- health [options]
+```
+Options:
+- `--timeout, -t` : Health check timeout in seconds (default: 30)
+
+This command is designed for Kubernetes health probes and Docker health checks.
+
 ## Configuration
 
 The application uses `appsettings.json` for configuration:
@@ -104,10 +113,46 @@ The RabbitMQ message follows the format defined in `RabbitMQ Message.xml`:
 
 ## Installation
 
+### Standard Installation
+
 1. Clone the repository
 2. Configure `appsettings.json` with your environment settings
 3. Run database migrations: `dotnet run -- migrate --create`
 4. Test with dry run: `dotnet run -- process --dry-run`
+
+### Docker Installation
+
+The application can be containerized using Docker for deployment in Kubernetes or other container platforms.
+
+```bash
+# Build Docker image
+docker build -t document-notification-service:latest .
+
+# Run with Docker
+docker run --rm \
+  -e Database__ConnectionString="your-connection-string" \
+  -e RabbitMQ__UserName="your-user" \
+  -e RabbitMQ__Password="your-password" \
+  document-notification-service:latest \
+  process --dry-run
+```
+
+### Kubernetes Deployment
+
+The service includes full Kubernetes support with:
+- ConfigMaps for configuration management
+- Secrets for sensitive data
+- CronJobs for scheduled processing
+- Jobs for database migrations
+- Example manifests for different schedules
+
+See [DOCKER_KUBERNETES.md](DOCKER_KUBERNETES.md) for detailed deployment instructions.
+
+Quick deployment:
+```bash
+# Update secrets in k8s/secret.yaml with your values
+kubectl apply -k k8s/
+```
 
 ## Error Handling
 

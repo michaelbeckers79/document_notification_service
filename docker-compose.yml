@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  # Document Notification Service
+  document-notification:
+    build: .
+    image: document-notification-service:latest
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      # Database Configuration
+      - Database__ConnectionString=Server=sqlserver;Database=DocumentNotificationDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      
+      # DSX Service Configuration
+      - DSXService__ServiceUrl=http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc
+      - DSXService__Username=user
+      - DSXService__Password=pass
+      
+      # RabbitMQ Configuration
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__VHost=/
+      - RabbitMQ__Port=5672
+      - RabbitMQ__UserName=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__Exchange=document-notifications
+      - RabbitMQ__UseSsl=false
+      
+      # Email Configuration
+      - Email__SmtpServer=smtp.example.com
+      - Email__SmtpPort=587
+      - Email__FromAddress=noreply@example.com
+      - Email__Recipients__0=admin@example.com
+    volumes:
+      - ./logs:/app/logs
+    # Run migration on startup, then process documents
+    command: >
+      sh -c "
+        dotnet DocumentNotificationService.dll migrate --create &&
+        dotnet DocumentNotificationService.dll process --dry-run
+      "
+
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd -Q 'SELECT 1'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # One-time migration job
+  migrate:
+    build: .
+    image: document-notification-service:latest
+    depends_on:
+      - sqlserver
+    environment:
+      - Database__ConnectionString=Server=sqlserver;Database=DocumentNotificationDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+    command: ["migrate", "--create"]
+    restart: "no"
+
+  # Scheduled processing (in production, use Kubernetes CronJob instead)
+  scheduler:
+    build: .
+    image: document-notification-service:latest
+    depends_on:
+      - sqlserver
+      - rabbitmq
+      - migrate
+    environment:
+      # Same environment as main service
+      - Database__ConnectionString=Server=sqlserver;Database=DocumentNotificationDB;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - DSXService__ServiceUrl=http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc
+      - DSXService__Username=user
+      - DSXService__Password=pass
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__VHost=/
+      - RabbitMQ__Port=5672
+      - RabbitMQ__UserName=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__Exchange=document-notifications
+      - RabbitMQ__UseSsl=false
+      - Email__SmtpServer=smtp.example.com
+      - Email__FromAddress=noreply@example.com
+      - Email__Recipients__0=admin@example.com
+    volumes:
+      - ./logs:/app/logs
+    # Simple scheduler simulation (use cron in production container or K8s CronJob)
+    command: >
+      sh -c "
+        while true; do
+          echo 'Running scheduled document processing...'
+          dotnet DocumentNotificationService.dll process --force
+          echo 'Sleeping for 30 minutes...'
+          sleep 1800
+        done
+      "
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+  rabbitmq_data:

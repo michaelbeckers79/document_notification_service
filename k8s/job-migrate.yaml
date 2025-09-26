@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: document-notification-migrate
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: document-notification-service
+        component: migrate
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: document-notification-migrate
+        image: document-notification-service:latest
+        imagePullPolicy: IfNotPresent
+        args: ["migrate", "--create"]
+        env:
+        # Load secrets
+        - name: Database__ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: Database__ConnectionString
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: document-notification-config
+  backoffLimit: 3

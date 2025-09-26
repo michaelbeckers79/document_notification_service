@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-notification-config
+  namespace: default
+data:
+  appsettings.json: |
+    {
+      "Serilog": {
+        "MinimumLevel": {
+          "Default": "Information",
+          "Override": {
+            "Microsoft": "Warning",
+            "Microsoft.Hosting.Lifetime": "Information"
+          }
+        },
+        "WriteTo": [
+          {
+            "Name": "Console",
+            "Args": {
+              "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+            }
+          },
+          {
+            "Name": "File",
+            "Args": {
+              "path": "logs/document-notification-.txt",
+              "rollingInterval": "Day",
+              "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}",
+              "retainedFileCountLimit": 31
+            }
+          }
+        ],
+        "Enrich": ["FromLogContext"]
+      },
+      "DSXService": {
+        "ServiceUrl": "http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc",
+        "Timeout": "00:05:00",
+        "DocumentTypes": [
+          "Investment Report",
+          "Quarterly Statement", 
+          "Performance Report"
+        ],
+        "PageSize": 50
+      },
+      "RabbitMQ": {
+        "HostName": "tfbemev0611",
+        "VHost": "ce_qa",
+        "Port": 5672,
+        "Exchange": "wio",
+        "RoutingKey": "",
+        "UseSsl": false,
+        "TenantId": "OFSCRMWealthQA",
+        "Operation": "comm:communication",
+        "Application": "thrd:dsx-service",
+        "TemplateId": "tmpl:document-notification"
+      },
+      "Email": {
+        "SmtpServer": "smtp.ofscorp.objectway.com",
+        "SmtpPort": 25,
+        "UseSsl": false,
+        "FromAddress": "noreply@objectway.com",
+        "FromName": "Document Notification Service",
+        "Recipients": [
+          "michael.beckers@objectway.com"
+        ]
+      }
+    }
+---
+# Environment variables for overriding configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-notification-env
+  namespace: default
+data:
+  # DSX Service Configuration
+  DSXService__ServiceUrl: "http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc"
+  DSXService__Timeout: "00:05:00"
+  DSXService__PageSize: "50"
+  
+  # RabbitMQ Configuration (non-sensitive)
+  RabbitMQ__HostName: "tfbemev0611"
+  RabbitMQ__VHost: "ce_qa"
+  RabbitMQ__Port: "5672"
+  RabbitMQ__Exchange: "wio"
+  RabbitMQ__RoutingKey: ""
+  RabbitMQ__UseSsl: "false"
+  RabbitMQ__TenantId: "OFSCRMWealthQA"
+  RabbitMQ__Operation: "comm:communication"
+  RabbitMQ__Application: "thrd:dsx-service"
+  RabbitMQ__TemplateId: "tmpl:document-notification"
+  
+  # Email Configuration (non-sensitive)
+  Email__SmtpServer: "smtp.ofscorp.objectway.com"
+  Email__SmtpPort: "25"
+  Email__UseSsl: "false"
+  Email__FromAddress: "noreply@objectway.com"
+  Email__FromName: "Document Notification Service"

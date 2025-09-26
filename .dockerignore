@@ -1,0 +1,41 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/logs/
+
+# Visual Studio files
+**/.vs/
+**/.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Environment files
+.env*
+
+# NuGet packages
+packages/
+**/*.nupkg
+
+# Temporary files
+**/*.tmp
+**/*.temp
+**/Thumbs.db
+**/.DS_Store
+
+# Docker files
+Dockerfile*
+.dockerignore
+
+# Kubernetes files
+k8s/
+kubernetes/

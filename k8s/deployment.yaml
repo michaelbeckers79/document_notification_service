@@ -1,0 +1,184 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-notification-service
+  namespace: default
+  labels:
+    app: document-notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-notification-service
+  template:
+    metadata:
+      labels:
+        app: document-notification-service
+    spec:
+      containers:
+      - name: document-notification
+        image: document-notification-service:latest
+        imagePullPolicy: IfNotPresent
+        # Keep the container running for manual commands
+        command: ["/bin/sh"]
+        args: ["-c", "sleep infinity"]
+        env:
+        # Load configuration from ConfigMap
+        - name: DSXService__ServiceUrl
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: DSXService__ServiceUrl
+        - name: DSXService__Timeout
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: DSXService__Timeout
+        - name: DSXService__PageSize
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: DSXService__PageSize
+        - name: RabbitMQ__HostName
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__HostName
+        - name: RabbitMQ__VHost
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__VHost
+        - name: RabbitMQ__Port
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__Port
+        - name: RabbitMQ__Exchange
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__Exchange
+        - name: RabbitMQ__RoutingKey
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__RoutingKey
+        - name: RabbitMQ__UseSsl
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__UseSsl
+        - name: RabbitMQ__TenantId
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__TenantId
+        - name: RabbitMQ__Operation
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__Operation
+        - name: RabbitMQ__Application
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__Application
+        - name: RabbitMQ__TemplateId
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: RabbitMQ__TemplateId
+        - name: Email__SmtpServer
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: Email__SmtpServer
+        - name: Email__SmtpPort
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: Email__SmtpPort
+        - name: Email__UseSsl
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: Email__UseSsl
+        - name: Email__FromAddress
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: Email__FromAddress
+        - name: Email__FromName
+          valueFrom:
+            configMapKeyRef:
+              name: document-notification-env
+              key: Email__FromName
+        # Load secrets
+        - name: Database__ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: Database__ConnectionString
+        - name: DSXService__Username
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: DSXService__Username
+        - name: DSXService__Password
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: DSXService__Password
+        - name: RabbitMQ__UserName
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: RabbitMQ__UserName
+        - name: RabbitMQ__Password
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: RabbitMQ__Password
+        - name: Email__UserName
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: Email__UserName
+        - name: Email__Password
+          valueFrom:
+            secretKeyRef:
+              name: document-notification-secrets
+              key: Email__Password
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+        - name: logs-volume
+          mountPath: /app/logs
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: document-notification-config
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: document-notification-logs-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: document-notification-logs-pvc
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
