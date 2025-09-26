@@ -29,8 +29,23 @@ public class DSXDocumentService : IDisposable
                 ReceiveTimeout = _settings.Timeout
             };
 
+            // Configure security if credentials are provided
+            if (!string.IsNullOrEmpty(_settings.Username) && !string.IsNullOrEmpty(_settings.Password))
+            {
+                binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly;
+                binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
+                _logger.LogInformation("DSX client configured with basic authentication for user: {Username}", _settings.Username);
+            }
+
             var endpoint = new EndpointAddress(_settings.ServiceUrl);
             var factory = new ChannelFactory<IDSXDocumentService>(binding, endpoint);
+            
+            // Set credentials if provided
+            if (!string.IsNullOrEmpty(_settings.Username) && !string.IsNullOrEmpty(_settings.Password))
+            {
+                factory.Credentials.UserName.UserName = _settings.Username;
+                factory.Credentials.UserName.Password = _settings.Password;
+            }
             
             _client = factory.CreateChannel();
             _logger.LogInformation("Created DSX service client for endpoint: {Endpoint}", _settings.ServiceUrl);
