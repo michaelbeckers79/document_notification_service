@@ -14,6 +14,8 @@ public class DSXServiceSettings
     public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(5);
     public List<string> DocumentTypes { get; set; } = new();
     public int PageSize { get; set; } = 50;
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }
 
 public class DatabaseSettings

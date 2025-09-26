@@ -55,6 +55,8 @@ The application uses `appsettings.json` for configuration:
 - **DocumentTypes**: Array of document types to filter
 - **PageSize**: Number of documents per page (for pagination)
 - **Timeout**: Service call timeout
+- **Username**: Username for basic HTTP authentication (optional)
+- **Password**: Password for basic HTTP authentication (optional)
 
 ### Database Settings
 - **ConnectionString**: SQL Server connection string
@@ -73,18 +75,20 @@ The application uses `appsettings.json` for configuration:
 
 ## Database Schema
 
-### ProcessedDocuments Table
-- **DocumentId**: Unique document identifier from DSX
-- **Name**: Document name/reference
-- **DocumentDate**: Document date from metadata
-- **PortfolioId**: Portfolio ID from metadata
-- **ProcessedAt**: When the document was processed
-- **MessageSent**: Whether RabbitMQ message was sent successfully
-- **ErrorMessage**: Error details if processing failed
+The database uses snake_case naming convention for tables and columns.
 
-### LastQueryTimestamps Table
-- **LastSuccessfulQuery**: Timestamp of last successful query
-- **UpdatedAt**: When the timestamp was last updated
+### processed_documents Table
+- **document_id**: Unique document identifier from DSX
+- **name**: Document name/reference
+- **document_date**: Document date from metadata
+- **portfolio_id**: Portfolio ID from metadata
+- **processed_at**: When the document was processed
+- **message_sent**: Whether RabbitMQ message was sent successfully
+- **error_message**: Error details if processing failed
+
+### last_query_timestamps Table
+- **last_successful_query**: Timestamp of last successful query
+- **updated_at**: When the timestamp was last updated
 
 ## Message Format
 
@@ -114,4 +118,9 @@ The RabbitMQ message follows the format defined in `RabbitMQ Message.xml`:
 
 ## Logging
 
-The application uses Microsoft.Extensions.Logging with console output. Log levels can be configured in `appsettings.json`.
+The application uses Serilog for advanced logging with both console and file output:
+
+- **Console Logging**: Structured logs with timestamps, levels, and context
+- **File Logging**: Daily rotating files stored in `logs/document-notification-{date}.txt`
+- **Retention**: Log files are kept for 31 days
+- **Configuration**: Log levels and sinks can be configured in `appsettings.json` under the `Serilog` section

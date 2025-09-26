@@ -8,6 +8,8 @@ using DocumentNotificationService.Commands;
 using DocumentNotificationService.Configuration;
 using DocumentNotificationService.Data;
 using DocumentNotificationService.Services;
+using Serilog;
+using Serilog.Events;
 
 namespace DocumentNotificationService;
 
@@ -173,6 +175,17 @@ class Program
                 config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                 config.AddEnvironmentVariables();
             })
+            .UseSerilog((context, services, configuration) => configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+                .WriteTo.File("logs/document-notification-.txt", 
+                    rollingInterval: RollingInterval.Day,
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}",
+                    retainedFileCountLimit: 31)
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+                .Enrich.FromLogContext())
             .ConfigureServices((context, services) =>
             {
                 // Configuration
@@ -190,13 +203,6 @@ class Program
                 services.AddScoped<RabbitMQService>();
                 services.AddScoped<EmailNotificationService>();
                 services.AddScoped<DocumentProcessingService>();
-
-                // Logging
-                services.AddLogging(builder =>
-                {
-                    builder.AddConsole();
-                    builder.AddDebug();
-                });
             });
     }
 }
