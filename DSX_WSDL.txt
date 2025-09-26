@@ -1,0 +1,724 @@
+<?xml
+version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="DocumentHandlingService" targetNamespace="HitecLabs.DataStore.DocumentHandlingApi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="HitecLabs.DataStore.DocumentHandlingApi" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:i0="http://tempuri.org/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+    <wsdl:import namespace="http://tempuri.org/" location="http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc?wsdl=wsdl0"/>
+    <wsdl:types>
+        <xsd:schema targetNamespace="HitecLabs.DataStore.DocumentHandlingApi/Imports">
+            <xsd:import schemaLocation="http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc?xsd=xsd0" namespace="HitecLabs.DataStore.DocumentHandlingApi"/>
+            <xsd:import schemaLocation="http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+            <xsd:import schemaLocation="http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IDocumentHandlingService_StoreNewDocument_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewDocument"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewDocument_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewDocumentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewRevisionedDocument_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewRevisionedDocument"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewRevisionedDocument_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewRevisionedDocumentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewDocumentSets_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewDocumentSets"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewDocumentSets_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewDocumentSetsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewRevisionedDocumentSets_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewRevisionedDocumentSets"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewRevisionedDocumentSets_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewRevisionedDocumentSetsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocument_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocument"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocument_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSets_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSets"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSets_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSetsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentIdentifier_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentIdentifier"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentIdentifier_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentIdentifierResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSetsIdentifier_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSetsIdentifier"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSetsIdentifier_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSetsIdentifierResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSetsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSetsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_StoreNewVersionedDocumentSetsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:StoreNewVersionedDocumentSetsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocument_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocument"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocument_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocument_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadata_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadata"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadata_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadata_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSets_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSets"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSets_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSetsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSets_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSetsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSetsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSetsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentMetadataSetsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentMetadataSetsVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentProperties_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentProperties"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentProperties_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentProperties_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesRevisionWithMimeType"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesRevisionWithMimeTypeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesVersionWithMimeType"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentPropertiesVersionWithMimeTypeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersionHistory_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentVersionHistory"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersionHistory_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetDocumentVersionHistoryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetDocumentVersionHistory_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResults_InputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResults"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResults_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResultsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResults_InvalidSearchFieldValueFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:InvalidSearchFieldValue"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResultsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResultsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsRevision_InvalidSearchFieldValueFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:InvalidSearchFieldValue"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResultsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SearchWithResultsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_SearchWithResultsVersion_InvalidSearchFieldValueFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:InvalidSearchFieldValue"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_Search_InputMessage">
+        <wsdl:part name="parameters" element="tns:Search"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_Search_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SearchResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_Search_InvalidSearchFieldValueFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:InvalidSearchFieldValue"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResults_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResults"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResults_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResultsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResultsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResultsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResultsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResultsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResults_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResults"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResults_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResultsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResultsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResultsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResultsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResultsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResultsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResultsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchResultsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchResultsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResultsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResultsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetSearchHitResultsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetSearchHitResultsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DestroySearch_InputMessage">
+        <wsdl:part name="parameters" element="tns:DestroySearch"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DestroySearch_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DestroySearchResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadata_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadata"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadata_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadata_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSets_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSets"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSets_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSetsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSets_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSetsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSetsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSetsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateDocumentMetadataSetsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentSetsRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentSetsRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentSetsVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MoveDocumentSetsVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_MoveDocumentSetsVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocument_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocument"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocument_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocumentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocument_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentRevision_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocumentRevision"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentRevision_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocumentRevisionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentRevision_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_DeleteDocumentVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckOutDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:CheckOutDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckOutDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:CheckOutDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckOutDocumentVersion_DocumentAlreadyCheckedOutFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentAlreadyCheckedOut"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckOutDocumentVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckInDocumentVersion_InputMessage">
+        <wsdl:part name="parameters" element="tns:CheckInDocumentVersion"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckInDocumentVersion_OutputMessage">
+        <wsdl:part name="parameters" element="tns:CheckInDocumentVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckInDocumentVersion_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_CheckInDocumentVersion_DocumentNotCheckedOutFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentNotCheckedOut"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UndoCheckOut_InputMessage">
+        <wsdl:part name="parameters" element="tns:UndoCheckOut"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UndoCheckOut_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UndoCheckOutResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_UndoCheckOut_DocumentNotCheckedOutFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentNotCheckedOut"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_InputMessage">
+        <wsdl:part name="parameters" element="tns:IsDocumentVersionCheckedOutByCurrentUser"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_OutputMessage">
+        <wsdl:part name="parameters" element="tns:IsDocumentVersionCheckedOutByCurrentUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetNextAvailableDocumentVersionNumber"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetNextAvailableDocumentVersionNumberResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_DocumentDoesNotExistFault_FaultMessage">
+        <wsdl:part name="detail" element="tns:DocumentDoesNotExist"/>
+    </wsdl:message>
+    <wsdl:portType name="IDocumentHandlingService">
+        <wsdl:operation name="StoreNewDocument">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewDocument" message="tns:IDocumentHandlingService_StoreNewDocument_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewDocumentResponse" message="tns:IDocumentHandlingService_StoreNewDocument_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewRevisionedDocument">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewRevisionedDocument" message="tns:IDocumentHandlingService_StoreNewRevisionedDocument_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewRevisionedDocumentResponse" message="tns:IDocumentHandlingService_StoreNewRevisionedDocument_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewDocumentSets">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewDocumentSets" message="tns:IDocumentHandlingService_StoreNewDocumentSets_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewDocumentSetsResponse" message="tns:IDocumentHandlingService_StoreNewDocumentSets_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewRevisionedDocumentSets">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewRevisionedDocumentSets" message="tns:IDocumentHandlingService_StoreNewRevisionedDocumentSets_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewRevisionedDocumentSetsResponse" message="tns:IDocumentHandlingService_StoreNewRevisionedDocumentSets_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocument">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocument" message="tns:IDocumentHandlingService_StoreNewVersionedDocument_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocument_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocumentSets">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSets" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSets_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSetsResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSets_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocumentIdentifier">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentIdentifier" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentIdentifier_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentIdentifierResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentIdentifier_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocumentSetsIdentifier">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSetsIdentifier" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSetsIdentifier_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSetsIdentifierResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSetsIdentifier_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentVersion" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentVersionResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentVersion_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="StoreNewVersionedDocumentSetsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSetsVersion" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSetsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/StoreNewVersionedDocumentSetsVersionResponse" message="tns:IDocumentHandlingService_StoreNewVersionedDocumentSetsVersion_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocument">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocument" message="tns:IDocumentHandlingService_GetDocument_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentResponse" message="tns:IDocumentHandlingService_GetDocument_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocument_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentRevision" message="tns:IDocumentHandlingService_GetDocumentRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentRevisionResponse" message="tns:IDocumentHandlingService_GetDocumentRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersion" message="tns:IDocumentHandlingService_GetDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersionResponse" message="tns:IDocumentHandlingService_GetDocumentVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadata">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadata" message="tns:IDocumentHandlingService_GetDocumentMetadata_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataResponse" message="tns:IDocumentHandlingService_GetDocumentMetadata_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadata_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadataRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataRevision" message="tns:IDocumentHandlingService_GetDocumentMetadataRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataRevisionResponse" message="tns:IDocumentHandlingService_GetDocumentMetadataRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadataRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadataSets">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSets" message="tns:IDocumentHandlingService_GetDocumentMetadataSets_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsResponse" message="tns:IDocumentHandlingService_GetDocumentMetadataSets_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadataSets_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadataSetsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsRevision" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsRevisionResponse" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadataVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataVersion" message="tns:IDocumentHandlingService_GetDocumentMetadataVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataVersionResponse" message="tns:IDocumentHandlingService_GetDocumentMetadataVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadataVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentMetadataSetsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsVersion" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsVersionResponse" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentMetadataSetsVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentMetadataSetsVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentProperties">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentProperties" message="tns:IDocumentHandlingService_GetDocumentProperties_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesResponse" message="tns:IDocumentHandlingService_GetDocumentProperties_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentProperties_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentPropertiesRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevision" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevisionResponse" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentPropertiesRevisionWithMimeType">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevisionWithMimeType" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevisionWithMimeTypeResponse" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesRevisionWithMimeTypeDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentPropertiesRevisionWithMimeType_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentPropertiesVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersion" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersionResponse" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentPropertiesVersionWithMimeType">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersionWithMimeType" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersionWithMimeTypeResponse" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentPropertiesVersionWithMimeTypeDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentPropertiesVersionWithMimeType_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetDocumentVersionHistory">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersionHistory" message="tns:IDocumentHandlingService_GetDocumentVersionHistory_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersionHistoryResponse" message="tns:IDocumentHandlingService_GetDocumentVersionHistory_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetDocumentVersionHistoryDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetDocumentVersionHistory_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchWithResults">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResults" message="tns:IDocumentHandlingService_SearchWithResults_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsResponse" message="tns:IDocumentHandlingService_SearchWithResults_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsInvalidSearchFieldValueFault" name="InvalidSearchFieldValueFault" message="tns:IDocumentHandlingService_SearchWithResults_InvalidSearchFieldValueFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchWithResultsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsRevision" message="tns:IDocumentHandlingService_SearchWithResultsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsRevisionResponse" message="tns:IDocumentHandlingService_SearchWithResultsRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsRevisionInvalidSearchFieldValueFault" name="InvalidSearchFieldValueFault" message="tns:IDocumentHandlingService_SearchWithResultsRevision_InvalidSearchFieldValueFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchWithResultsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsVersion" message="tns:IDocumentHandlingService_SearchWithResultsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsVersionResponse" message="tns:IDocumentHandlingService_SearchWithResultsVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchWithResultsVersionInvalidSearchFieldValueFault" name="InvalidSearchFieldValueFault" message="tns:IDocumentHandlingService_SearchWithResultsVersion_InvalidSearchFieldValueFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Search">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/Search" message="tns:IDocumentHandlingService_Search_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchResponse" message="tns:IDocumentHandlingService_Search_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/SearchInvalidSearchFieldValueFault" name="InvalidSearchFieldValueFault" message="tns:IDocumentHandlingService_Search_InvalidSearchFieldValueFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchResults">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResults" message="tns:IDocumentHandlingService_GetSearchResults_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResultsResponse" message="tns:IDocumentHandlingService_GetSearchResults_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchResultsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResultsRevision" message="tns:IDocumentHandlingService_GetSearchResultsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResultsRevisionResponse" message="tns:IDocumentHandlingService_GetSearchResultsRevision_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchHitResults">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResults" message="tns:IDocumentHandlingService_GetSearchHitResults_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResultsResponse" message="tns:IDocumentHandlingService_GetSearchHitResults_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchHitResultsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResultsRevision" message="tns:IDocumentHandlingService_GetSearchHitResultsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResultsRevisionResponse" message="tns:IDocumentHandlingService_GetSearchHitResultsRevision_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchResultsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResultsVersion" message="tns:IDocumentHandlingService_GetSearchResultsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchResultsVersionResponse" message="tns:IDocumentHandlingService_GetSearchResultsVersion_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSearchHitResultsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResultsVersion" message="tns:IDocumentHandlingService_GetSearchHitResultsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetSearchHitResultsVersionResponse" message="tns:IDocumentHandlingService_GetSearchHitResultsVersion_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DestroySearch">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DestroySearch" message="tns:IDocumentHandlingService_DestroySearch_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DestroySearchResponse" message="tns:IDocumentHandlingService_DestroySearch_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadata">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadata" message="tns:IDocumentHandlingService_UpdateDocumentMetadata_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadata_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadata_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadataRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataRevision" message="tns:IDocumentHandlingService_UpdateDocumentMetadataRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataRevisionResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadataRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadataRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadataSets">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSets" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSets_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSets_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSets_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadataSetsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsRevision" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsRevisionResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadataVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataVersion" message="tns:IDocumentHandlingService_UpdateDocumentMetadataVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataVersionResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadataVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadataVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateDocumentMetadataSetsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsVersion" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsVersionResponse" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UpdateDocumentMetadataSetsVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_UpdateDocumentMetadataSetsVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MoveDocumentRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentRevision" message="tns:IDocumentHandlingService_MoveDocumentRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentRevisionResponse" message="tns:IDocumentHandlingService_MoveDocumentRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_MoveDocumentRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MoveDocumentSetsRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsRevision" message="tns:IDocumentHandlingService_MoveDocumentSetsRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsRevisionResponse" message="tns:IDocumentHandlingService_MoveDocumentSetsRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_MoveDocumentSetsRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MoveDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentVersion" message="tns:IDocumentHandlingService_MoveDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentVersionResponse" message="tns:IDocumentHandlingService_MoveDocumentVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_MoveDocumentVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MoveDocumentSetsVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsVersion" message="tns:IDocumentHandlingService_MoveDocumentSetsVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsVersionResponse" message="tns:IDocumentHandlingService_MoveDocumentSetsVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/MoveDocumentSetsVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_MoveDocumentSetsVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteDocument">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocument" message="tns:IDocumentHandlingService_DeleteDocument_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentResponse" message="tns:IDocumentHandlingService_DeleteDocument_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_DeleteDocument_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteDocumentRevision">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentRevision" message="tns:IDocumentHandlingService_DeleteDocumentRevision_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentRevisionResponse" message="tns:IDocumentHandlingService_DeleteDocumentRevision_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentRevisionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_DeleteDocumentRevision_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentVersion" message="tns:IDocumentHandlingService_DeleteDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentVersionResponse" message="tns:IDocumentHandlingService_DeleteDocumentVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/DeleteDocumentVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_DeleteDocumentVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CheckOutDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckOutDocumentVersion" message="tns:IDocumentHandlingService_CheckOutDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckOutDocumentVersionResponse" message="tns:IDocumentHandlingService_CheckOutDocumentVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckOutDocumentVersionDocumentAlreadyCheckedOutFault" name="DocumentAlreadyCheckedOutFault" message="tns:IDocumentHandlingService_CheckOutDocumentVersion_DocumentAlreadyCheckedOutFault_FaultMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckOutDocumentVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_CheckOutDocumentVersion_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CheckInDocumentVersion">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckInDocumentVersion" message="tns:IDocumentHandlingService_CheckInDocumentVersion_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckInDocumentVersionResponse" message="tns:IDocumentHandlingService_CheckInDocumentVersion_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckInDocumentVersionDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_CheckInDocumentVersion_DocumentDoesNotExistFault_FaultMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/CheckInDocumentVersionDocumentNotCheckedOutFault" name="DocumentNotCheckedOutFault" message="tns:IDocumentHandlingService_CheckInDocumentVersion_DocumentNotCheckedOutFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UndoCheckOut">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UndoCheckOut" message="tns:IDocumentHandlingService_UndoCheckOut_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UndoCheckOutResponse" message="tns:IDocumentHandlingService_UndoCheckOut_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/UndoCheckOutDocumentNotCheckedOutFault" name="DocumentNotCheckedOutFault" message="tns:IDocumentHandlingService_UndoCheckOut_DocumentNotCheckedOutFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="IsDocumentVersionCheckedOutByCurrentUser">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/IsDocumentVersionCheckedOutByCurrentUser" message="tns:IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/IsDocumentVersionCheckedOutByCurrentUserResponse" message="tns:IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/IsDocumentVersionCheckedOutByCurrentUserDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_IsDocumentVersionCheckedOutByCurrentUser_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetNextAvailableDocumentVersionNumber">
+            <wsdl:input wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetNextAvailableDocumentVersionNumber" message="tns:IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_InputMessage"/>
+            <wsdl:output wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetNextAvailableDocumentVersionNumberResponse" message="tns:IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_OutputMessage"/>
+            <wsdl:fault wsaw:Action="HitecLabs.DataStore.DocumentHandlingApi/IDocumentHandlingService/GetNextAvailableDocumentVersionNumberDocumentDoesNotExistFault" name="DocumentDoesNotExistFault" message="tns:IDocumentHandlingService_GetNextAvailableDocumentVersionNumber_DocumentDoesNotExistFault_FaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:service name="DocumentHandlingService">
+        <wsdl:port name="BasicHttpBinding_IDocumentHandlingService" binding="i0:BasicHttpBinding_IDocumentHandlingService">
+            <soap:address location="http://datastoredsx/DocumentHandlingService/DocumentHandlingService.svc"/>
+        </wsdl:port>
+        <wsdl:port name="NetTcpBinding_IDocumentHandlingService" binding="i0:NetTcpBinding_IDocumentHandlingService">
+            <soap12:address location="net.tcp://sv-lon-dm12.int.jmfinn.com/DocumentHandlingService/DocumentHandlingService.svc"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>net.tcp://sv-lon-dm12.int.jmfinn.com/DocumentHandlingService/DocumentHandlingService.svc</wsa10:Address>
+                <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+                    <Upn>s-docman@int.jmfinn.com</Upn>
+                </Identity>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
