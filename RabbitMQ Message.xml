@@ -1,0 +1,5 @@
+<Communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.objectway.com/comm/request/communicationrequest">
+    <Type>DOCUMENT_NOTIFICATION</Type>
+    <EntityID>{{Portfolio ID}}<EntityID>
+    <ExternalData></ExternalData>
+</Communication>
