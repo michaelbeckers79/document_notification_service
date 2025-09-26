@@ -72,11 +72,13 @@ The application uses `appsettings.json` for configuration:
 
 ### RabbitMQ Settings
 - **HostName**: RabbitMQ server hostname
+- **VHost**: VHost to use for RabbitMQ connection
 - **Port**: RabbitMQ server port
 - **Exchange**: Exchange name for publishing messages
 - **UseSsl**: Enable SSL/TLS connection
 - **SslSettings**: SSL certificate configuration
 - **Headers**: Configurable message headers ($tenantid, $operation, $application)
+- **TemplateId**: Configurable communication type id
 
 ### Email Settings
 - **SmtpServer**: SMTP server for notifications
