@@ -107,7 +107,7 @@ The RabbitMQ message follows the format defined in `RabbitMQ Message.xml`:
 
 ```xml
 <Communication xmlns="http://www.objectway.com/comm/request/communicationrequest">
-    <Type>DOCUMENT_NOTIFICATION</Type>
+    <Type>{{TemplateId}}</Type>
     <EntityID>{{Portfolio ID}}</EntityID>
     <ExternalData></ExternalData>
 </Communication>
