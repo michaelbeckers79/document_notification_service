@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentNotificationService.Models;
 
-[Table("ProcessedDocuments")]
+[Table("processed_documents")]
 public class ProcessedDocument
 {
     [Key]
@@ -32,6 +32,7 @@ public class ProcessedDocument
     public string? ErrorMessage { get; set; }
 }
 
+[Table("last_query_timestamps")]
 public class LastQueryTimestamp
 {
     [Key]
