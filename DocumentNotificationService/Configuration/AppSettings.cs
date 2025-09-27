@@ -57,4 +57,6 @@ public class EmailSettings
     public string FromAddress { get; set; } = string.Empty;
     public string FromName { get; set; } = string.Empty;
     public List<string> Recipients { get; set; } = new();
+    public bool SendSummaryEmail { get; set; } = true;
+    public bool SendFailuresOnly { get; set; } = false;
 }

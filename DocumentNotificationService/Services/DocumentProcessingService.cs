@@ -32,7 +32,7 @@ public class DocumentProcessingService
         _settings = options.Value;
     }
 
-    public async Task<ProcessingResult> ProcessDocumentsAsync(DateTime? since = null, bool dryRun = false, bool force = false)
+    public async Task<ProcessingResult> ProcessDocumentsAsync(DateTime? since = null, bool dryRun = false, bool force = false, bool noSummaryEmail = false, bool failuresOnly = false)
     {
         var result = new ProcessingResult();
         var errors = new List<string>();
@@ -125,7 +125,7 @@ public class DocumentProcessingService
             // Send summary email
             if (result.ProcessedCount > 0 || result.ErrorCount > 0)
             {
-                await _emailService.SendProcessingSummaryAsync(result.ProcessedCount, result.ErrorCount, errors);
+                await _emailService.SendProcessingSummaryAsync(result.ProcessedCount, result.ErrorCount, errors, noSummaryEmail, failuresOnly);
             }
         }
         catch (Exception ex)
@@ -260,7 +260,7 @@ public class DocumentProcessingService
             .ToListAsync();
     }
 
-    public async Task<ProcessingResult> RetryFailedDocumentsAsync(string? specificDocumentId = null)
+    public async Task<ProcessingResult> RetryFailedDocumentsAsync(string? specificDocumentId = null, bool noSummaryEmail = false, bool failuresOnly = false)
     {
         var result = new ProcessingResult();
         var errors = new List<string>();
@@ -306,7 +306,7 @@ public class DocumentProcessingService
             // Send summary email
             if (result.ProcessedCount > 0 || result.ErrorCount > 0)
             {
-                await _emailService.SendProcessingSummaryAsync(result.ProcessedCount, result.ErrorCount, errors);
+                await _emailService.SendProcessingSummaryAsync(result.ProcessedCount, result.ErrorCount, errors, noSummaryEmail, failuresOnly);
             }
         }
         catch (Exception ex)

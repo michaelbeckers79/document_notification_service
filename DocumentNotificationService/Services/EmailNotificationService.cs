@@ -63,10 +63,26 @@ public class EmailNotificationService
         }
     }
 
-    public async Task SendProcessingSummaryAsync(int processedCount, int errorCount, List<string> errors)
+    public async Task SendProcessingSummaryAsync(int processedCount, int errorCount, List<string> errors, bool? overrideNoSummaryEmail = null, bool? overrideFailuresOnly = null)
     {
         try
         {
+            // Check if summary email should be sent based on configuration and overrides
+            var sendSummaryEmail = overrideNoSummaryEmail.HasValue ? !overrideNoSummaryEmail.Value : _settings.SendSummaryEmail;
+            if (!sendSummaryEmail)
+            {
+                _logger.LogInformation("Summary email sending is disabled, skipping notification");
+                return;
+            }
+
+            // Check if we should send only on failures
+            var failuresOnly = overrideFailuresOnly ?? _settings.SendFailuresOnly;
+            if (failuresOnly && errorCount == 0)
+            {
+                _logger.LogInformation("Failures-only mode is enabled and no errors occurred, skipping summary notification");
+                return;
+            }
+
             if (!_settings.Recipients.Any())
             {
                 _logger.LogInformation("No email recipients configured, skipping summary notification");

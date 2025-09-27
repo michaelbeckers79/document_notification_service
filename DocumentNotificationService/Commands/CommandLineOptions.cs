@@ -13,6 +13,12 @@ public class ProcessDocumentsOptions
 
     [Option('s', "since", Required = false, HelpText = "Override the last query timestamp (ISO 8601 format)")]
     public DateTime? Since { get; set; }
+
+    [Option("no-summary-email", Required = false, HelpText = "Disable summary email notification for this command")]
+    public bool NoSummaryEmail { get; set; }
+
+    [Option("failures-only", Required = false, HelpText = "Send summary email only if errors occur")]
+    public bool FailuresOnly { get; set; }
 }
 
 [Verb("status", HelpText = "Check the status of the service and last processed documents")]
@@ -30,6 +36,12 @@ public class RetryOptions
 
     [Option('a', "all", Required = false, HelpText = "Retry all failed documents")]
     public bool All { get; set; }
+
+    [Option("no-summary-email", Required = false, HelpText = "Disable summary email notification for this command")]
+    public bool NoSummaryEmail { get; set; }
+
+    [Option("failures-only", Required = false, HelpText = "Send summary email only if errors occur")]
+    public bool FailuresOnly { get; set; }
 }
 
 [Verb("migrate", HelpText = "Run database migrations")]
