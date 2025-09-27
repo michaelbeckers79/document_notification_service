@@ -48,7 +48,7 @@ class Program
         {
             logger.LogInformation("Starting document processing command");
             
-            var result = await processingService.ProcessDocumentsAsync(options.Since, options.DryRun, options.Force);
+            var result = await processingService.ProcessDocumentsAsync(options.Since, options.DryRun, options.Force, options.NoSummaryEmail, options.FailuresOnly);
             
             Console.WriteLine($"Processing completed:");
             Console.WriteLine($"  Documents processed: {result.ProcessedCount}");
@@ -121,7 +121,7 @@ class Program
         {
             logger.LogInformation("Starting retry command");
             
-            var result = await processingService.RetryFailedDocumentsAsync(options.DocumentId);
+            var result = await processingService.RetryFailedDocumentsAsync(options.DocumentId, options.NoSummaryEmail, options.FailuresOnly);
             
             Console.WriteLine($"Retry completed:");
             Console.WriteLine($"  Documents retried successfully: {result.ProcessedCount}");
