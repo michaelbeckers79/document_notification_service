@@ -91,11 +91,12 @@ The application uses `appsettings.json` for configuration:
 
 ### CRM Dynamics Settings
 - **ServiceUrl**: CRM Dynamics service endpoint (e.g., https://your-org.crm.dynamics.com)
-- **ClientId**: Azure AD application client ID for authentication
-- **ClientSecret**: Azure AD application client secret
-- **TenantId**: Azure AD tenant ID
+- **ClientId**: OAuth application client ID for authentication
+- **ClientSecret**: OAuth application client secret  
 - **Timeout**: Service call timeout (default: 5 minutes)
 - **BatchSize**: Number of portfolios to process per batch (default: 50)
+
+**Note**: This integration uses OAuth authentication for on-premise CRM Dynamics instances and queries the `ofs_portfolio` entity using `ofs_externalid` to match portfolio IDs and `ofs_primaryowner` to retrieve owner information.
 
 ## Database Schema
 
@@ -132,10 +133,12 @@ When `Email.UseEmailNotification` is set to `false` (default), the service sends
 ### Email Notifications with CRM Integration
 When `Email.UseEmailNotification` is set to `true`, the service:
 
-1. **Retrieves Portfolio Owner Information** from CRM Dynamics in configurable batches
+1. **Retrieves Portfolio Owner Information** from CRM Dynamics using the `ofs_portfolio` entity
+   - Queries `ofs_portfolio` where `ofs_externalid` matches the portfolio ID
+   - Retrieves owner details via the `ofs_primaryowner` lookup field
 2. **Supports Two Owner Types**:
    - **Contact** (Private Person): Uses firstname, lastname, and email fields
-   - **Account** (Organization): Uses organization name and contact person email
+   - **Account** (Organization): Uses organization name and email address
 3. **Sends Personalized HTML Emails** using configurable templates
 4. **Template Variables** available in email templates:
    - `{{PortfolioId}}` - Portfolio identifier
@@ -178,19 +181,18 @@ Example custom template configuration:
 
 To use email notifications with portfolio owner information:
 
-1. **Configure Azure AD Application**:
-   - Register an application in Azure AD
-   - Grant necessary permissions for Dynamics 365
-   - Note the Client ID, Client Secret, and Tenant ID
+1. **Configure OAuth Application**:
+   - Register an OAuth application for your on-premise CRM Dynamics
+   - Grant necessary permissions for accessing portfolio and contact/account data
+   - Note the Client ID and Client Secret
 
 2. **Configure CRM Dynamics Connection**:
    ```json
    {
      "CrmDynamics": {
-       "ServiceUrl": "https://your-org.crm.dynamics.com",
-       "ClientId": "your-client-id",
-       "ClientSecret": "your-client-secret",
-       "TenantId": "your-tenant-id",
+       "ServiceUrl": "https://your-onpremise-crm.domain.com",
+       "ClientId": "your-oauth-client-id",
+       "ClientSecret": "your-oauth-client-secret",
        "BatchSize": 50
      }
    }

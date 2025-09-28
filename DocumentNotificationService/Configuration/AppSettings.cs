@@ -69,7 +69,6 @@ public class CrmDynamicsSettings
     public string ServiceUrl { get; set; } = string.Empty;
     public string ClientId { get; set; } = string.Empty;
     public string ClientSecret { get; set; } = string.Empty;
-    public string TenantId { get; set; } = string.Empty;
     public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(5);
     public int BatchSize { get; set; } = 50;
 }

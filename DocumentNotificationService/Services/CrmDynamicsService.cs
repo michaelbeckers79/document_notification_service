@@ -27,7 +27,8 @@ public class CrmDynamicsService : IDisposable
         {
             try
             {
-                var connectionString = $"AuthType=ClientSecret;Url={_settings.ServiceUrl};ClientId={_settings.ClientId};ClientSecret={_settings.ClientSecret};";
+                // Use OAuth for on-premise CRM Dynamics instance
+                var connectionString = $"AuthType=OAuth;Url={_settings.ServiceUrl};ClientId={_settings.ClientId};ClientSecret={_settings.ClientSecret};RedirectUri=http://localhost;LoginPrompt=Never;";
                 _serviceClient = new ServiceClient(connectionString);
                 
                 if (!_serviceClient.IsReady)
@@ -90,84 +91,105 @@ public class CrmDynamicsService : IDisposable
         
         try
         {
-            // First, try to find contacts (private persons) as primary owners
-            var contactQuery = new QueryExpression("contact")
+            // Query the ofs_portfolio entity using ofs_externalid to find portfolios and their primary owners
+            var portfolioQuery = new QueryExpression("ofs_portfolio")
             {
-                ColumnSet = new ColumnSet("contactid", "firstname", "lastname", "emailaddress1", "new_portfolioid"),
+                ColumnSet = new ColumnSet("ofs_portfolioid", "ofs_externalid", "ofs_primaryowner"),
                 Criteria = new FilterExpression
                 {
                     Conditions =
                     {
-                        new ConditionExpression("new_portfolioid", ConditionOperator.In, portfolioIdArray),
+                        new ConditionExpression("ofs_externalid", ConditionOperator.In, portfolioIdArray),
                         new ConditionExpression("statecode", ConditionOperator.Equal, 0) // Active
+                    }
+                },
+                // Add link to the primary owner to get owner details
+                LinkEntities =
+                {
+                    new LinkEntity
+                    {
+                        LinkFromEntityName = "ofs_portfolio",
+                        LinkFromAttributeName = "ofs_primaryowner",
+                        LinkToEntityName = "contact",
+                        LinkToAttributeName = "contactid",
+                        JoinOperator = JoinOperator.LeftOuter,
+                        EntityAlias = "primarycontact",
+                        Columns = new ColumnSet("contactid", "firstname", "lastname", "emailaddress1")
+                    },
+                    new LinkEntity
+                    {
+                        LinkFromEntityName = "ofs_portfolio",
+                        LinkFromAttributeName = "ofs_primaryowner",
+                        LinkToEntityName = "account",
+                        LinkToAttributeName = "accountid",
+                        JoinOperator = JoinOperator.LeftOuter,
+                        EntityAlias = "primaryaccount",
+                        Columns = new ColumnSet("accountid", "name", "emailaddress1")
                     }
                 }
             };
 
-            var contactResults = await Task.Run(() => client.RetrieveMultiple(contactQuery));
+            var portfolioResults = await Task.Run(() => client.RetrieveMultiple(portfolioQuery));
             
-            foreach (var contact in contactResults.Entities)
+            foreach (var portfolio in portfolioResults.Entities)
             {
-                var portfolioId = contact.GetAttributeValue<string>("new_portfolioid");
-                if (!string.IsNullOrEmpty(portfolioId))
+                var externalId = portfolio.GetAttributeValue<string>("ofs_externalid");
+                if (string.IsNullOrEmpty(externalId))
+                    continue;
+
+                var primaryOwnerRef = portfolio.GetAttributeValue<EntityReference>("ofs_primaryowner");
+                if (primaryOwnerRef == null)
+                    continue;
+
+                PortfolioOwner owner = null;
+
+                // Check if primary owner is a contact (private person)
+                if (primaryOwnerRef.LogicalName == "contact")
                 {
-                    owners.Add(new PortfolioOwner
+                    var contactFirstName = portfolio.GetAttributeValue<AliasedValue>("primarycontact.firstname")?.Value as string ?? "";
+                    var contactLastName = portfolio.GetAttributeValue<AliasedValue>("primarycontact.lastname")?.Value as string ?? "";
+                    var contactEmail = portfolio.GetAttributeValue<AliasedValue>("primarycontact.emailaddress1")?.Value as string ?? "";
+
+                    owner = new PortfolioOwner
                     {
-                        Id = contact.Id.ToString(),
+                        Id = primaryOwnerRef.Id.ToString(),
                         Type = OwnerType.Contact,
-                        PortfolioId = portfolioId,
-                        FirstName = contact.GetAttributeValue<string>("firstname") ?? "",
-                        LastName = contact.GetAttributeValue<string>("lastname") ?? "",
-                        Name = $"{contact.GetAttributeValue<string>("firstname")} {contact.GetAttributeValue<string>("lastname")}".Trim(),
-                        Email = contact.GetAttributeValue<string>("emailaddress1") ?? ""
-                    });
+                        PortfolioId = externalId,
+                        FirstName = contactFirstName,
+                        LastName = contactLastName,
+                        Name = $"{contactFirstName} {contactLastName}".Trim(),
+                        Email = contactEmail
+                    };
                 }
-            }
-
-            // Find remaining portfolios that don't have contact owners, and look for account owners
-            var foundPortfolioIds = owners.Select(o => o.PortfolioId).ToHashSet();
-            var remainingPortfolioIds = portfolioIdArray.Where(p => !foundPortfolioIds.Contains(p)).ToArray();
-
-            if (remainingPortfolioIds.Any())
-            {
-                var accountQuery = new QueryExpression("account")
+                // Check if primary owner is an account (organization)
+                else if (primaryOwnerRef.LogicalName == "account")
                 {
-                    ColumnSet = new ColumnSet("accountid", "name", "emailaddress1", "new_portfolioid", "new_contactpersonemail"),
-                    Criteria = new FilterExpression
-                    {
-                        Conditions =
-                        {
-                            new ConditionExpression("new_portfolioid", ConditionOperator.In, remainingPortfolioIds),
-                            new ConditionExpression("statecode", ConditionOperator.Equal, 0) // Active
-                        }
-                    }
-                };
+                    var accountName = portfolio.GetAttributeValue<AliasedValue>("primaryaccount.name")?.Value as string ?? "";
+                    var accountEmail = portfolio.GetAttributeValue<AliasedValue>("primaryaccount.emailaddress1")?.Value as string ?? "";
 
-                var accountResults = await Task.Run(() => client.RetrieveMultiple(accountQuery));
-                
-                foreach (var account in accountResults.Entities)
-                {
-                    var portfolioId = account.GetAttributeValue<string>("new_portfolioid");
-                    if (!string.IsNullOrEmpty(portfolioId))
+                    owner = new PortfolioOwner
                     {
-                        var orgName = account.GetAttributeValue<string>("name") ?? "";
-                        owners.Add(new PortfolioOwner
-                        {
-                            Id = account.Id.ToString(),
-                            Type = OwnerType.Account,
-                            PortfolioId = portfolioId,
-                            Name = orgName,
-                            OrganizationName = orgName,
-                            Email = account.GetAttributeValue<string>("emailaddress1") ?? "",
-                            ContactPersonEmail = account.GetAttributeValue<string>("new_contactpersonemail") ?? ""
-                        });
-                    }
+                        Id = primaryOwnerRef.Id.ToString(),
+                        Type = OwnerType.Account,
+                        PortfolioId = externalId,
+                        Name = accountName,
+                        OrganizationName = accountName,
+                        Email = accountEmail,
+                        ContactPersonEmail = accountEmail
+                    };
+                }
+
+                if (owner != null)
+                {
+                    owners.Add(owner);
+                    _logger.LogDebug("Found {OwnerType} owner {OwnerName} for portfolio {PortfolioId}", 
+                        owner.Type, owner.Name, externalId);
                 }
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving batch of portfolio owners");
+            _logger.LogError(ex, "Error retrieving batch of portfolio owners from ofs_portfolio entity");
             throw;
         }
 
