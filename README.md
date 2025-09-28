@@ -168,8 +168,53 @@ Example custom template configuration:
 
 1. Clone the repository
 2. Configure `appsettings.json` with your environment settings
-3. Run database migrations: `dotnet run -- migrate --create`
-4. Test with dry run: `dotnet run -- process --dry-run`
+3. Choose your notification method:
+   - **RabbitMQ** (default): Set `Email.UseEmailNotification` to `false`
+   - **Email with CRM**: Set `Email.UseEmailNotification` to `true` and configure CRM Dynamics settings
+4. Run database migrations: `dotnet run -- migrate --create`
+5. Test with dry run: `dotnet run -- process --dry-run`
+
+### CRM Dynamics Setup for Email Notifications
+
+To use email notifications with portfolio owner information:
+
+1. **Configure Azure AD Application**:
+   - Register an application in Azure AD
+   - Grant necessary permissions for Dynamics 365
+   - Note the Client ID, Client Secret, and Tenant ID
+
+2. **Configure CRM Dynamics Connection**:
+   ```json
+   {
+     "CrmDynamics": {
+       "ServiceUrl": "https://your-org.crm.dynamics.com",
+       "ClientId": "your-client-id",
+       "ClientSecret": "your-client-secret",
+       "TenantId": "your-tenant-id",
+       "BatchSize": 50
+     }
+   }
+   ```
+
+3. **Enable Email Notifications**:
+   ```json
+   {
+     "Email": {
+       "UseEmailNotification": true,
+       "TemplatePath": "./templates/custom-template.html"
+     }
+   }
+   ```
+
+### Custom Email Template
+
+Create a custom HTML template with the following variables:
+- `{{PortfolioId}}`, `{{OwnerName}}`, `{{DocumentName}}`
+- `{{DocumentDate}}`, `{{DocumentId}}`, `{{NotificationDate}}`
+- `{{#if IsContact}}...{{else}}...{{/if}}` for conditional content
+- `{{OrganizationName}}` for organization accounts
+
+See `email-template.html` for a complete example.
 
 ### Docker Installation
 
