@@ -6,6 +6,7 @@ public class AppSettings
     public DatabaseSettings Database { get; set; } = new();
     public RabbitMQSettings RabbitMQ { get; set; } = new();
     public EmailSettings Email { get; set; } = new();
+    public CrmDynamicsSettings CrmDynamics { get; set; } = new();
 }
 
 public class DSXServiceSettings
@@ -59,4 +60,15 @@ public class EmailSettings
     public List<string> Recipients { get; set; } = new();
     public bool SendSummaryEmail { get; set; } = true;
     public bool SendFailuresOnly { get; set; } = false;
+    public string TemplatePath { get; set; } = string.Empty;
+    public bool UseEmailNotification { get; set; } = false;
+}
+
+public class CrmDynamicsSettings
+{
+    public string ServiceUrl { get; set; } = string.Empty;
+    public string ClientId { get; set; } = string.Empty;
+    public string ClientSecret { get; set; } = string.Empty;
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(5);
+    public int BatchSize { get; set; } = 50;
 }
