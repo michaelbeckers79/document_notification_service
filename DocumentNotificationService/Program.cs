@@ -231,6 +231,8 @@ class Program
                 services.AddScoped<DSXDocumentService>();
                 services.AddScoped<RabbitMQService>();
                 services.AddScoped<EmailNotificationService>();
+                services.AddScoped<EmailTemplateService>();
+                services.AddScoped<CrmDynamicsService>();
                 services.AddScoped<DocumentProcessingService>();
             });
     }

@@ -14,6 +14,8 @@ public class DocumentProcessingService
     private readonly DSXDocumentService _dsxService;
     private readonly RabbitMQService _rabbitMqService;
     private readonly EmailNotificationService _emailService;
+    private readonly EmailTemplateService _emailTemplateService;
+    private readonly CrmDynamicsService _crmService;
     private readonly AppSettings _settings;
 
     public DocumentProcessingService(
@@ -22,6 +24,8 @@ public class DocumentProcessingService
         DSXDocumentService dsxService,
         RabbitMQService rabbitMqService,
         EmailNotificationService emailService,
+        EmailTemplateService emailTemplateService,
+        CrmDynamicsService crmService,
         IOptions<AppSettings> options)
     {
         _logger = logger;
@@ -29,6 +33,8 @@ public class DocumentProcessingService
         _dsxService = dsxService;
         _rabbitMqService = rabbitMqService;
         _emailService = emailService;
+        _emailTemplateService = emailTemplateService;
+        _crmService = crmService;
         _settings = options.Value;
     }
 
@@ -144,15 +150,32 @@ public class DocumentProcessingService
         _logger.LogDebug("Processing document {DocumentId} for Portfolio {PortfolioId}", 
             document.DocumentId, document.PortfolioId);
 
-        // Send RabbitMQ notification
-        if (!dryRun)
+        // Check if email notification is enabled
+        if (_settings.Email.UseEmailNotification)
         {
-            await _rabbitMqService.PublishDocumentNotificationAsync(document.PortfolioId);
+            // Send email notification with template
+            if (!dryRun)
+            {
+                await SendEmailNotificationAsync(document);
+            }
+            else
+            {
+                _logger.LogInformation("[DRY RUN] Would send email notification for Portfolio ID: {PortfolioId}", 
+                    document.PortfolioId);
+            }
         }
         else
         {
-            _logger.LogInformation("[DRY RUN] Would publish notification for Portfolio ID: {PortfolioId}", 
-                document.PortfolioId);
+            // Send RabbitMQ notification (existing behavior)
+            if (!dryRun)
+            {
+                await _rabbitMqService.PublishDocumentNotificationAsync(document.PortfolioId);
+            }
+            else
+            {
+                _logger.LogInformation("[DRY RUN] Would publish RabbitMQ notification for Portfolio ID: {PortfolioId}", 
+                    document.PortfolioId);
+            }
         }
 
         // Save document to database
@@ -163,6 +186,33 @@ public class DocumentProcessingService
         else
         {
             _logger.LogInformation("[DRY RUN] Would save document: {DocumentId}", document.DocumentId);
+        }
+    }
+
+    private async Task SendEmailNotificationAsync(DocumentInfo document)
+    {
+        try
+        {
+            // Get portfolio owner information from CRM Dynamics
+            var owners = await _crmService.GetPortfolioOwnersAsync(new[] { document.PortfolioId });
+            
+            if (!owners.Any())
+            {
+                _logger.LogWarning("No owner found for portfolio {PortfolioId}", document.PortfolioId);
+                return;
+            }
+
+            // Send email to primary owner (first one found)
+            var primaryOwner = owners.First();
+            await _emailTemplateService.SendDocumentNotificationEmailAsync(document.PortfolioId, primaryOwner, document);
+
+            _logger.LogInformation("Email notification sent successfully for portfolio {PortfolioId} to owner {OwnerName}", 
+                document.PortfolioId, primaryOwner.Name);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send email notification for portfolio {PortfolioId}", document.PortfolioId);
+            throw;
         }
     }
 
@@ -280,7 +330,22 @@ public class DocumentProcessingService
                 try
                 {
                     // Retry sending notification
-                    await _rabbitMqService.PublishDocumentNotificationAsync(document.PortfolioId);
+                    if (_settings.Email.UseEmailNotification)
+                    {
+                        // Create DocumentInfo from stored data to send email
+                        var docInfo = new DocumentInfo
+                        {
+                            DocumentId = document.DocumentId,
+                            Name = document.Name,
+                            PortfolioId = document.PortfolioId,
+                            DocumentDate = document.DocumentDate
+                        };
+                        await SendEmailNotificationAsync(docInfo);
+                    }
+                    else
+                    {
+                        await _rabbitMqService.PublishDocumentNotificationAsync(document.PortfolioId);
+                    }
 
                     // Update document status
                     document.MessageSent = true;

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Document Available - Portfolio {{PortfolioId}}</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            margin: 0;
+            padding: 0;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: #ffffff;
+        }
+        .header { 
+            background-color: #2c5aa0; 
+            color: white;
+            padding: 30px 20px; 
+            text-align: center;
+        }
+        .header h1 { 
+            margin: 0; 
+            font-size: 24px;
+        }
+        .content { 
+            padding: 30px 20px; 
+        }
+        .footer { 
+            background-color: #f8f9fa; 
+            padding: 20px; 
+            font-size: 12px; 
+            color: #666; 
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+        .highlight { 
+            background-color: #fff3cd; 
+            padding: 20px; 
+            border-left: 4px solid #ffc107; 
+            margin: 20px 0; 
+            border-radius: 4px;
+        }
+        .details { 
+            background-color: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 5px; 
+            margin: 20px 0; 
+        }
+        .details h3 {
+            margin-top: 0;
+            color: #2c5aa0;
+        }
+        .details ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .details li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .details li:last-child {
+            border-bottom: none;
+        }
+        .details strong {
+            color: #495057;
+        }
+        .button {
+            display: inline-block;
+            background-color: #2c5aa0;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #1e3d6f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 New Document Available</h1>
+        </div>
+        
+        <div class="content">
+            <p>Dear <strong>{{OwnerName}}</strong>,</p>
+            
+            <div class="highlight">
+                <strong>🔔 A new document is now available for your portfolio <em>{{PortfolioId}}</em>.</strong>
+            </div>
+            
+            <div class="details">
+                <h3>📋 Document Details</h3>
+                <ul>
+                    <li><strong>Document Name:</strong> {{DocumentName}}</li>
+                    <li><strong>Document Date:</strong> {{DocumentDate}}</li>
+                    <li><strong>Document ID:</strong> {{DocumentId}}</li>
+                    <li><strong>Portfolio ID:</strong> {{PortfolioId}}</li>
+                </ul>
+            </div>
+            
+            {{#if IsContact}}
+            <p>This document has been prepared specifically for you as the portfolio holder. We recommend reviewing it at your earliest convenience.</p>
+            {{else}}
+            <p>This document has been prepared for your organization, <strong>{{OrganizationName}}</strong>. Please ensure it reaches the appropriate personnel for review.</p>
+            {{/if}}
+            
+            <p style="text-align: center;">
+                <a href="#" class="button">🔗 Access Your Portfolio</a>
+            </p>
+            
+            <p>To view and download this document:</p>
+            <ol>
+                <li>Log in to your secure account portal</li>
+                <li>Navigate to your portfolio section</li>
+                <li>Look for the new document in the documents list</li>
+            </ol>
+            
+            <p>If you have any questions about this document or need assistance accessing your account, please don't hesitate to contact our support team.</p>
+            
+            <p>Best regards,<br>
+            <strong>Document Notification Service</strong><br>
+            <em>Objectway Financial Solutions</em></p>
+        </div>
+        
+        <div class="footer">
+            <p>🔐 This is an automated notification sent securely. Please do not reply to this email.</p>
+            <p>📅 Generated on {{NotificationDate}}</p>
+            <p style="margin-top: 15px; font-size: 10px;">
+                If you believe you received this email in error, please contact our support team immediately.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

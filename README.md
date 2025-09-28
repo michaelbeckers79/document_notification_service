@@ -6,7 +6,10 @@ A .NET Core console application that processes documents from the DSX document s
 
 - **DSX Integration**: Queries DSX document store API with time-based filtering
 - **Document Type Filtering**: Configurable document types to process
-- **RabbitMQ Messaging**: Sends notifications with configurable headers and SSL support
+- **Dual Notification System**: Choose between RabbitMQ messaging or Email notifications
+- **Email Template System**: Configurable HTML email templates with portfolio owner information
+- **CRM Dynamics Integration**: Retrieves portfolio owner details (contacts and accounts) for personalized notifications
+- **Batch Processing**: Handles large datasets with configurable batch sizes for CRM queries
 - **Database Tracking**: Stores processed documents in SQL Server database
 - **Email Notifications**: Sends error and summary emails
 - **Command Line Interface**: Multiple actions with advanced options
@@ -83,6 +86,16 @@ The application uses `appsettings.json` for configuration:
 ### Email Settings
 - **SmtpServer**: SMTP server for notifications
 - **Recipients**: List of email addresses for error notifications
+- **TemplatePath**: Path to custom HTML email template file (optional)
+- **UseEmailNotification**: Enable email notifications instead of RabbitMQ (boolean)
+
+### CRM Dynamics Settings
+- **ServiceUrl**: CRM Dynamics service endpoint (e.g., https://your-org.crm.dynamics.com)
+- **ClientId**: Azure AD application client ID for authentication
+- **ClientSecret**: Azure AD application client secret
+- **TenantId**: Azure AD tenant ID
+- **Timeout**: Service call timeout (default: 5 minutes)
+- **BatchSize**: Number of portfolios to process per batch (default: 50)
 
 ## Database Schema
 
@@ -101,9 +114,12 @@ The database uses snake_case naming convention for tables and columns.
 - **last_successful_query**: Timestamp of last successful query
 - **updated_at**: When the timestamp was last updated
 
-## Message Format
+## Notification Systems
 
-The RabbitMQ message follows the format defined in `RabbitMQ Message.xml`:
+The service supports two notification methods that can be configured based on your requirements:
+
+### RabbitMQ Notifications (Default)
+When `Email.UseEmailNotification` is set to `false` (default), the service sends notifications via RabbitMQ using the configured message template:
 
 ```xml
 <Communication xmlns="http://www.objectway.com/comm/request/communicationrequest">
@@ -111,6 +127,39 @@ The RabbitMQ message follows the format defined in `RabbitMQ Message.xml`:
     <EntityID>{{Portfolio ID}}</EntityID>
     <ExternalData></ExternalData>
 </Communication>
+```
+
+### Email Notifications with CRM Integration
+When `Email.UseEmailNotification` is set to `true`, the service:
+
+1. **Retrieves Portfolio Owner Information** from CRM Dynamics in configurable batches
+2. **Supports Two Owner Types**:
+   - **Contact** (Private Person): Uses firstname, lastname, and email fields
+   - **Account** (Organization): Uses organization name and contact person email
+3. **Sends Personalized HTML Emails** using configurable templates
+4. **Template Variables** available in email templates:
+   - `{{PortfolioId}}` - Portfolio identifier
+   - `{{OwnerName}}` - Full name (contact) or organization name
+   - `{{DocumentName}}` - Name of the new document
+   - `{{DocumentDate}}` - Document date (formatted as yyyy-MM-dd)
+   - `{{DocumentId}}` - Unique document identifier
+   - `{{NotificationDate}}` - Timestamp when notification was generated
+   - `{{OrganizationName}}` - Organization name (for accounts only)
+   - `{{#if IsContact}}...{{else}}...{{/if}}` - Conditional content based on owner type
+
+### Email Template Configuration
+- **Default Template**: Built-in responsive HTML template with professional styling
+- **Custom Template**: Specify `TemplatePath` in configuration to use your own HTML template
+- **Template Location**: Place custom templates in a accessible file path (e.g., `./templates/email-template.html`)
+
+Example custom template configuration:
+```json
+{
+  "Email": {
+    "UseEmailNotification": true,
+    "TemplatePath": "./templates/custom-email-template.html"
+  }
+}
 ```
 
 ## Installation
